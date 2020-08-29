@@ -14,42 +14,70 @@ function makePageForEpisodes(episodeList) {
 //window.onload = setup; 
 //=======================================================================
 
+var episodeFrames = document.getElementById('episodeFrames');
+var searchBar = document.getElementById('searchBar');
 var allEpisodes = getAllEpisodes();
 var episodeCode = "";
-allEpisodes.forEach(grid);
+var searchResults = document.getElementById('searchResults');
 
-//main function
-function grid(allEpisodes){
-  // episode code
 
-  if (allEpisodes.number <= 9 && allEpisodes.season <= 9) {
-    episodeCode = `S0${allEpisodes.season}E0${allEpisodes.number}`;
-  } else if (allEpisodes.number <= 9 && allEpisodes.season > 9){
-    episodeCode = `S${allEpisodes.season}0E${allEpisodes.number}`;
-  } else if (allEpisodes.number > 9 && allEpisodes.season <= 9){
-    episodeCode = `S0${allEpisodes.season}E${allEpisodes.number}`;
-  } else if(allEpisodes.number > 9 && allEpisodes.season > 9){
-    episodeCode = `S${allEpisodes.season}E${allEpisodes.number}`;
-  }
+
+searchBar.addEventListener('keyup', function(e){
+  var searchTerm = e.target.value.toLowerCase();
   
-  //div 
-  var episodeDiv = document.createElement('div');
-  episodeDiv.className = "episodeDiv";
-  document.body.appendChild(episodeDiv);
-// title and episode code
-  var episodeTitle = document.createElement('h2');
-  episodeTitle.className = "episodeTitle";
-  episodeTitle.innerHTML = `${allEpisodes.name} ${episodeCode}`;
-  episodeDiv.appendChild(episodeTitle);
-  //img
-  var episodeImg = document.createElement('img');
-  episodeImg.src = allEpisodes.image.medium;
-  episodeDiv.appendChild(episodeImg);
-  episodeImg.className = "episodeImg";
-  //summary text
-  var summary = document.createElement('p');
-  summary.innerHTML = allEpisodes.summary;
-  episodeDiv.appendChild(summary);
-  summary.className = "summary";
+  var filteredEpisodes = allEpisodes.filter((episode) => {
+  
+    return (
+      episode.name.toLowerCase().includes(searchTerm) ||
+      episode.summary.toLowerCase().includes(searchTerm)
+    );
+    
+  });
 
-}
+  displayCharacters(filteredEpisodes);
+  
+});
+
+/* const loadCharacters = async () => {
+  try {
+    const res = await fetch('https://api.tvmaze.com/shows/82/episodes');
+    allEpisodes = await res.json();
+    displayCharacters(allEpisodes);
+  } catch (err) {
+    console.error(err);
+  }
+}; */
+
+const displayCharacters = (episodes) => {
+ 
+  const htmlString = episodes.map((episodes) => {
+     
+      if (episodes.number <= 9 && episodes.season <= 9) {
+        episodeCode = `S0${episodes.season}E0${episodes.number}`;
+      } else if (episodes.number <= 9 && episodes.season > 9) {
+        episodeCode = `S${episodes.season}0E${episodes.number}`;
+      } else if (episodes.number > 9 && episodes.season <= 9) {
+        episodeCode = `S0${episodes.season}E${episodes.number}`;
+      } else if (episodes.number > 9 && episodes.season > 9) {
+        episodeCode = `S${episodes.season}E${episodes.number}`;
+      } 
+    
+      return `
+            <div class="character">
+                <h2>${episodes.name} ${episodeCode}</h2>
+                <p> ${episodes.summary}</p>
+                <img src="${episodes.image.medium}"></img>
+            </div>
+        `;
+    });
+    //.join('');
+   
+  searchResults.innerHTML = `Displaying ${htmlString.length} of 73`;
+  episodeFrames.innerHTML = htmlString;
+  
+};
+
+//loadCharacters();
+displayCharacters(allEpisodes);
+
+
