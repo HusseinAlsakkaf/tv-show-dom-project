@@ -9,8 +9,8 @@ var selectList = document.getElementById("selects");
 
 
 // Live Search 
- searchBar.addEventListener('keyup', function(e){
-  var searchTerm = e.target.value.toLowerCase();  
+ searchBar.addEventListener('keyup', function(el){
+  var searchTerm = el.target.value.toLowerCase();  
    var filteredEpisodes = allEpisodes.filter((episode) => {
   
     return (
@@ -34,16 +34,13 @@ const displayEpisodes = (filteredEpisodes) => {
  in the "filteredEpisodes" variable. This way the code will only display the selected episode 
  from the dropdown list 
    */
-  selectList.onchange = function () {
+   selectList.addEventListener("change", function(event) {
+     filteredEpisodes = allEpisodes.filter(function (e) { return e["name"] == selectList.value }); 
 
-     filteredEpisodes = allEpisodes.filter((episode) => {
+     displayEpisodes(filteredEpisodes);
+  }); 
+  
 
-      this.value.toLowerCase() == episode.name.toLowerCase();
-    });  
-
-
-  }  
- 
   // using map to populate the page with the filtered episodes
   const htmlString = filteredEpisodes.map((episodes) => {
 // creating a dropdown list
