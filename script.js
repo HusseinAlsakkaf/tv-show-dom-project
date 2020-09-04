@@ -5,8 +5,15 @@ var searchBar = document.getElementById('searchBar');
 var episodeCode = "";
 var searchResults = document.getElementById('searchResults');
 var selectList = document.getElementById("selects");
+var homeBtn = document.getElementById("homeBtn");
 
-
+// creating a dropdown list
+allEpisodes.map((episodes) => {
+  var option = document.createElement("option");
+  option.value = episodes.name;
+  option.text = episodes.name;
+  selectList.appendChild(option);
+});
 
 // Live Search 
  searchBar.addEventListener('keyup', function(el){
@@ -29,13 +36,14 @@ var selectList = document.getElementById("selects");
 const displayEpisodes = (filteredEpisodes) => {
 
  /*
-  this code is not working however it is supposed
- to store -the episode that was clicked from the dropdown list- it is supposed to store it 
+ This code stores -the episode that was clicked from the dropdown list- it stores it 
  in the "filteredEpisodes" variable. This way the code will only display the selected episode 
  from the dropdown list 
    */
-   selectList.addEventListener("change", function(event) {
-     filteredEpisodes = allEpisodes.filter(function (e) { return e["name"] == selectList.value }); 
+   selectList.addEventListener("change", function() {
+     filteredEpisodes = allEpisodes.filter(function (e) {
+        return e.name == selectList.value 
+      }); 
 
      displayEpisodes(filteredEpisodes);
   }); 
@@ -43,13 +51,6 @@ const displayEpisodes = (filteredEpisodes) => {
 
   // using map to populate the page with the filtered episodes
   const htmlString = filteredEpisodes.map((episodes) => {
-// creating a dropdown list
-    var option = document.createElement("option");
-    option.value = episodes.name;
-    option.text = episodes.name;
-    selectList.appendChild(option);
-     
-  
 // episodes format code
 
       if (episodes.number <= 9 && episodes.season <= 9) {
@@ -67,10 +68,11 @@ const displayEpisodes = (filteredEpisodes) => {
     // displaying episodes
     
       return `
-            <div>
-                <h2>${episodes.name} ${episodeCode}</h2>
-                <p> ${episodes.summary}</p>
-                <img src="${episodes.image.medium}"></img>
+            <div class = "episodeDiv">
+                <h2 class = "title">${episodes.name} ${episodeCode}</h2>
+                <img src="${episodes.image.medium}" class = "img"></img>
+                <p class = "summary"> ${episodes.summary}</p>
+                
             </div>
         `;
     });
@@ -80,8 +82,10 @@ const displayEpisodes = (filteredEpisodes) => {
   episodeFrames.innerHTML = htmlString;
   
 };
-
-
+// Home button calls the display function with "allEpisodes" as a parameter to diplay all episodes again
+homeBtn.addEventListener("click",function(){
+  displayEpisodes(allEpisodes);
+});
 
 /* calling the display function with all episodes as parameter in order to diplay
  all the episodes before entering a search term */

@@ -1,18 +1,46 @@
-#root {
-  color: red;
+#root{
+  width: 100%;
 }
+body{
+  background: linear-gradient(to right,#fdfc47,#24fe41);
+}
+
 .episodeDiv{
-  display: inline-flex;
-  flex-direction: column;
-   width: 80%;
-  height: auto; 
- margin: 3em;
- border-style: solid;
- background-color: green;
+  width: 45%;
+  display: inline-block;
+  margin-left:  3em;
 }
-.episodeImg{
-  
+
+ #searchBar {
+    width: 80%;
+    height: 32px;
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    font-size: 12px;
+ }
+
+
+#selects {
+  border-radius: 0;
+  margin-top: 1em;
+  width: 25%;
+  height: 2em;
+  margin-left: 3em;
 }
-.summary{
-  
+option{
+  font-size: 18px;
+  font-family: sans-serif;
 }
+
+#homeBtn{
+   background: #0069eb;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  padding: 15px 15px;
+  text-decoration: none;
+  margin-top: 1em;
+  float: right;
+  margin-right: 3em;
+ }
