@@ -78,7 +78,7 @@ const displayEpisodes = (filteredEpisodes) => {
     });
   
   
-  searchResults.innerHTML = `Displaying ${htmlString.length} of ${allEpisodes.length}`;
+  searchResults.innerHTML = `test ${htmlString.length} of ${allEpisodes.length}`;
   episodeFrames.innerHTML = htmlString;
   
 };
