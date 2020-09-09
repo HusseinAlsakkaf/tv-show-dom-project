@@ -9,8 +9,26 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id = "searchDvi">
+      <input
+      type="text"
+      name="searchBar"
+      id="searchBar"
+      placeholder="Search Here"
+      >
     </div>
+    <select name="episodes" id="selects">
+      <option value="episodes">Episodes</option>
+    </select>
+    <button id="homeBtn">Home</button>
+    <h4 id="searchResults"></h4>
+    <div id="root">
+<div id="episodeFrames"></div>
+    </div>
+    
+    
+    
+    
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
@@ -18,4 +36,7 @@
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   </body>
+  <footer>
+ <small>&copy; Copyright 2020, <a href="https://www.tvmaze.com/" target="_blank">TVmaze</a></small>
+</footer>
 </html>
