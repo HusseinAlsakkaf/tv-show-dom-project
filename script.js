@@ -11,20 +11,24 @@ let homeBtn = document.getElementById("homeBtn");
 let allEpisodes;
 
 
-/* const htmlString = allShows.map((show) => {
-   return `
-            <div class = "episodeDiv">
-                <h2 class = "title">${show.name}</h2>
-                <img src="${show.image.medium}" class = "img" />
-                <p class = "summary"> ${show.summary}</p>
-                
+function showShows()
+ {allShows.map((show) => {
+   let showDiv = document.createElement("div");
+   showDiv.className =  "episodeDiv";
+   episodeFrames.appendChild(showDiv);
+   let showTitle = document.createElement("h2");
+   showTitle.id = show.id;
+   showTitle.className = "title";
+   showTitle.innerText = show.name;
+   showDiv.appendChild(showTitle);
+   showTitle.addEventListener("click",() => {
+    showsSelect.value = show.id; 
+    getData(show.id);
+  });
   
-            </div>
-        `;
-});
-episodeFrames.innerHTML = htmlString; */
-
-
+            });};
+           
+showShows();
 
 // creating a dropdown list for Shows
 
@@ -36,11 +40,12 @@ episodeFrames.innerHTML = htmlString; */
   });
 showsSelect.addEventListener("change",(e)=>{
    episodesSelect.innerHTML = "";
-getData(e.target.value)
+   
+   e.target.value !== "All" ? getData(e.target.value):showShows();
 })
 
 
-getData(82);
+// getData(82);
 
 
 //=============fetch========================
@@ -165,7 +170,9 @@ episodeCode =`S${("0"+episodes.season).slice(-2)}E${("0"+episodes.number).slice(
 
 // Home button calls the display function with "allEpisodes" as a parameter to diplay all episodes again
 homeBtn.addEventListener("click", function () {
-  displayEpisodes(allEpisodes);
+  episodeFrames.innerHTML ="";
+  showShows();
+ // displayEpisodes(allEpisodes);
 });
 
 
