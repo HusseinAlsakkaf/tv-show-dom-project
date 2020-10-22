@@ -65,7 +65,7 @@ getData(82);
 async function getData(showId) {
     
  
-  const response = await fetch(`http://api.tvmaze.com/shows/${showId}/episodes`);
+  const response = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`);
   const data = await response.json();
   allEpisodes = data;
    await search();
