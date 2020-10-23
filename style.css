@@ -1,24 +1,24 @@
-#root{
+#root {
   width: 100%;
 }
-body{
-  background: linear-gradient(to right,#fdfc47,#24fe41);
+body {
+  background: linear-gradient(to right, #fdfc47, #24fe41);
 }
 
-.episodeDiv{
+.episodeDiv {
   width: 45%;
   display: inline-block;
-  margin-left:  3em;
+  margin-left: 3em;
 }
 
- #searchBar, #searchShow {
-    width: 80%;
-    height: 32px;
-    border-radius: 3px;
-    border: 1px solid #eaeaea;
-    font-size: 12px;
- }
-
+#searchBar,
+#searchShow {
+  width: 80%;
+  height: 32px;
+  border-radius: 3px;
+  border: 1px solid #eaeaea;
+  font-size: 12px;
+}
 
 .selects {
   border-radius: 0;
@@ -27,13 +27,13 @@ body{
   height: 2em;
   margin-left: 3em;
 }
-option{
+option {
   font-size: 18px;
   font-family: sans-serif;
 }
 
-#homeBtn{
-   background: #0069eb;
+#homeBtn {
+  background: #0069eb;
   border-radius: 30px;
   border: none;
   color: #fff;
@@ -43,19 +43,37 @@ option{
   margin-top: 1em;
   float: right;
   margin-right: 3em;
- }
- .showTitle{
-  
- }
- .showDiv{
-   display: flex;
-   
- }
- .showSummary{
-   
-   
- }
- .showInfoDiv{
+}
+.showTitle {
+  cursor: pointer;
+}
+.infoDiv {
+  display: flex;
+  justify-content: space-between;
+}
+.infoDiv img {
+  width: 18%;
+  height: auto;
+}
 
- }
- 
+.showSummary {
+  background-color: olive;
+  padding: 10px;
+  width: 55%;
+  box-shadow: 5px 10px #888888;
+}
+.showInfoDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: thistle;
+  padding: 50px;
+  box-shadow: 5px 10px #888888;
+}
+.showInfoDiv span {
+  width: 80%;
+}
+.genresDiv {
+  
+  display: flex;
+}

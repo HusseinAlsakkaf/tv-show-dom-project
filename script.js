@@ -24,10 +24,14 @@ allShows.map((show) => {
    episodeFrames.appendChild(showDiv);
    //Show Titel
    let showTitle = document.createElement("h2");
+   let infoDiv = document.createElement("div");
+   infoDiv.className = "infoDiv";
    showTitle.id = show.id;
    showTitle.className = "showTitle";
    showTitle.innerText = show.name;
+
    showDiv.appendChild(showTitle);
+   showDiv.appendChild(infoDiv);
    showTitle.addEventListener("click",() => {
     showsSelect.value = show.id; 
     getData(show.id);
@@ -38,7 +42,7 @@ allShows.map((show) => {
   let showImage = document.createElement("img");
    if(show.image){
     showImage.src = show.image.medium;
-showDiv.appendChild(showImage);
+infoDiv.appendChild(showImage);
    } else {console.log(show.name)}
 
   // Show Summary
@@ -46,12 +50,13 @@ showDiv.appendChild(showImage);
   show.summary = show.summary.replace("<p>", " ");
   show.summary = show.summary.replace("</b>", " ");
   show.summary = show.summary.replace("<b>", " ");
-let showSummary = document.createElement("span");
+let showSummary = document.createElement("p");
 let showSummaryDiv = document.createElement("div");
 showSummary.className =  "showSummary";
    showSummary.innerText = show.summary;
-showSummaryDiv.appendChild(showSummary);
-showDiv.appendChild(showSummaryDiv);
+
+
+infoDiv.appendChild(showSummary);
 
 // show information
 let showInfoDiv = document.createElement("div");
@@ -63,9 +68,26 @@ let showRating = document.createElement("span");
 showInfoDiv.appendChild(showRating);
 
 // show genres
-let showGenres = document.createElement("span");
-   showGenres.innerText = ` Genres: ${show.genres} `;
-showInfoDiv.appendChild(showGenres);
+
+let genresDiv = document.createElement("div");
+let genresUl = document.createElement("ul");
+let genresTitle = document.createElement("p");
+
+
+   
+showInfoDiv.appendChild(genresDiv);
+genresTitle.innerText = "Genres:"
+genresDiv.appendChild(genresTitle);
+genresDiv.className = "genresDiv";
+genresDiv.appendChild(genresUl);
+console.log(show["genres"]);
+show["genres"] && show["genres"].forEach(item => {
+let genresLi = document.createElement("li");
+genresLi.innerText = item;
+genresUl.appendChild(genresLi);
+});
+
+
 // show status
 
 let showStatus = document.createElement("span");
@@ -76,7 +98,7 @@ showInfoDiv.appendChild(showStatus);
 let showRuntime = document.createElement("span");
    showRuntime.innerText = ` Runtime: ${show.runtime} `;
 showInfoDiv.appendChild(showRuntime);
-   showDiv.appendChild(showInfoDiv);
+   infoDiv.appendChild(showInfoDiv);
 
 
   
