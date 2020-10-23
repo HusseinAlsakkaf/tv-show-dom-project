@@ -11,7 +11,7 @@ body{
   margin-left:  3em;
 }
 
- #searchBar {
+ #searchBar, #searchShow {
     width: 80%;
     height: 32px;
     border-radius: 3px;
@@ -44,3 +44,18 @@ option{
   float: right;
   margin-right: 3em;
  }
+ .showTitle{
+  
+ }
+ .showDiv{
+   display: flex;
+   
+ }
+ .showSummary{
+   
+   
+ }
+ .showInfoDiv{
+
+ }
+ 

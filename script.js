@@ -2,6 +2,7 @@
 let allShows = getAllShows().sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 let episodeFrames = document.getElementById("episodeFrames");
 let searchBar = document.getElementById("searchBar");
+let searchShow = document.getElementById("searchShow");
 let episodeCode = "";
 let searchResults = document.getElementById("searchResults");
 let episodesSelect = document.getElementById("episodesSelect");
@@ -11,24 +12,92 @@ let homeBtn = document.getElementById("homeBtn");
 let allEpisodes;
 
 
-function showShows()
- {allShows.map((show) => {
+function showShows(allShows)
+
+ {searchShow.style.display = "";
+searchBar.style.display = "none";
+ episodeFrames.innerHTML ="";
+ searchResults.style.display = "none";
+allShows.map((show) => {
    let showDiv = document.createElement("div");
-   showDiv.className =  "episodeDiv";
+   showDiv.className =  "showDiv";
    episodeFrames.appendChild(showDiv);
+   //Show Titel
    let showTitle = document.createElement("h2");
    showTitle.id = show.id;
-   showTitle.className = "title";
+   showTitle.className = "showTitle";
    showTitle.innerText = show.name;
    showDiv.appendChild(showTitle);
    showTitle.addEventListener("click",() => {
     showsSelect.value = show.id; 
     getData(show.id);
   });
+
+
+     // Show Image 
+  let showImage = document.createElement("img");
+   if(show.image){
+    showImage.src = show.image.medium;
+showDiv.appendChild(showImage);
+   } else {console.log(show.name)}
+
+  // Show Summary
+  show.summary = show.summary.replace("</p>", " ");
+  show.summary = show.summary.replace("<p>", " ");
+  show.summary = show.summary.replace("</b>", " ");
+  show.summary = show.summary.replace("<b>", " ");
+let showSummary = document.createElement("span");
+let showSummaryDiv = document.createElement("div");
+showSummary.className =  "showSummary";
+   showSummary.innerText = show.summary;
+showSummaryDiv.appendChild(showSummary);
+showDiv.appendChild(showSummaryDiv);
+
+// show information
+let showInfoDiv = document.createElement("div");
+showInfoDiv.className =  "showInfoDiv";
+
+// show rating
+let showRating = document.createElement("span");
+   showRating.innerText = ` Rated: ${show.rating.average} `;
+showInfoDiv.appendChild(showRating);
+
+// show genres
+let showGenres = document.createElement("span");
+   showGenres.innerText = ` Genres: ${show.genres} `;
+showInfoDiv.appendChild(showGenres);
+// show status
+
+let showStatus = document.createElement("span");
+   showStatus.innerText = ` Status: ${show.status} `;
+showInfoDiv.appendChild(showStatus);
+
+// show runtime
+let showRuntime = document.createElement("span");
+   showRuntime.innerText = ` Runtime: ${show.runtime} `;
+showInfoDiv.appendChild(showRuntime);
+   showDiv.appendChild(showInfoDiv);
+
+
   
             });};
            
-showShows();
+showShows(allShows);
+
+ // Live Search for shows
+  searchShow.addEventListener("keyup", function (el) {
+    console.log("www")
+    let searchShowTerm = el.target.value.toLowerCase();
+    let filteredShows = allShows.filter((show) => {
+      return (
+        show.name.toLowerCase().includes(searchShowTerm)
+        
+      );
+    });
+ episodeFrames.innerHTML ="";
+    showShows(filteredShows);
+  });
+
 
 // creating a dropdown list for Shows
 
@@ -41,31 +110,8 @@ showShows();
 showsSelect.addEventListener("change",(e)=>{
    episodesSelect.innerHTML = "";
    
-   e.target.value !== "All" ? getData(e.target.value):showShows();
+   e.target.value !== "All" ? getData(e.target.value):showShows(allShows);
 })
-
-
-// getData(82);
-
-
-//=============fetch========================
-//async function getDataShow(){
-  //select show
- 
- /*  showsSelect.addEventListener("change", function () {
-    slectedShow = allShows.filter(function (e) {
-      return e.name == showsSelect.value;
-    });
-    
-
-    URL = slectedShow[0]._links.self.href + "/episodes";
-  
-     getData();
-    
-     
-
-  });
-} */
 
 async function getData(showId) {
     
@@ -121,7 +167,9 @@ async function getData(showId) {
 
   async function displayEpisodes(filteredEpisodes){
 
-    
+    searchBar.style.display = "";
+searchShow.style.display = "none";
+
  
 
   /*
@@ -161,7 +209,7 @@ episodeCode =`S${("0"+episodes.season).slice(-2)}E${("0"+episodes.number).slice(
   });
     
   
-
+searchResults.style.display = "";
   searchResults.innerHTML = `Displaying ${htmlString.length} of ${allEpisodes.length}`;
   episodeFrames.innerHTML = htmlString;
   
@@ -171,7 +219,9 @@ episodeCode =`S${("0"+episodes.season).slice(-2)}E${("0"+episodes.number).slice(
 // Home button calls the display function with "allEpisodes" as a parameter to diplay all episodes again
 homeBtn.addEventListener("click", function () {
   episodeFrames.innerHTML ="";
-  showShows();
+   episodesSelect.innerHTML = "";
+   showsSelect.value = "All";
+  showShows(allShows);
  // displayEpisodes(allEpisodes);
 });
 
