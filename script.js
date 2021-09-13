@@ -13,9 +13,10 @@ let allEpisodes;
 
 
 function showShows(allShows)
-
+//switching betwwen displaying the two searchbars
  {searchShow.style.display = "";
 searchBar.style.display = "none";
+
  episodeFrames.innerHTML ="";
  searchResults.style.display = "none";
 allShows.map((show) => {
@@ -152,34 +153,31 @@ async function getData(showId) {
 
 // =======search and dropdown list=============
   function search(){
-   
- 
-  // creating a dropdown list for Episodes
-    let option = document.createElement("option");
+    // creating a dropdown list for Episodes
+      let option = document.createElement("option");
     option.value = 0;
     option.text = "Episodes";
-    episodesSelect.appendChild(option);
-  allEpisodes.map((episodes) => {
-  let option = document.createElement("option");
-    option.value = episodes.name;
-    option.text = episodes.name;
-    episodesSelect.appendChild(option);
-  });
-
-  
-  // Live Search
-  searchBar.addEventListener("keyup", function (el) {
-    let searchTerm = el.target.value.toLowerCase();
-    let filteredEpisodes = allEpisodes.filter((episode) => {
-      return (
-        episode.name.toLowerCase().includes(searchTerm) ||
-        episode.summary.toLowerCase().includes(searchTerm)
-      );
+    episodesSelect.appendChild(option); 
+    allEpisodes.map((episodes) => {
+      let option = document.createElement("option");
+      option.value = episodes.name;
+      option.text = episodes.name;
+      episodesSelect.appendChild(option);
     });
 
-    displayEpisodes(filteredEpisodes);
-  });
-}
+    // Live Search
+    searchBar.addEventListener("keyup", function (el) {
+      let searchTerm = el.target.value.toLowerCase();
+      let filteredEpisodes = allEpisodes.filter((episode) => {
+        return (
+          episode.name.toLowerCase().includes(searchTerm) ||
+          episode.summary.toLowerCase().includes(searchTerm)
+        );
+      });
+
+      displayEpisodes(filteredEpisodes);
+    });
+  }
 
  
   
@@ -188,38 +186,36 @@ async function getData(showId) {
 // ===========display episods function=========
 
   async function displayEpisodes(filteredEpisodes){
-
     searchBar.style.display = "";
-searchShow.style.display = "none";
+    searchShow.style.display = "none";
 
- 
-
-  /*
+    /*
  This code stores -the episode that was clicked from the dropdown list- it stores it 
  in the "filteredEpisodes" variable. This way the code will only display the selected episode 
  from the dropdown list 
    */
 
-  episodesSelect.addEventListener("change", function () {
-    filteredEpisodes = allEpisodes.filter(function (e) {
-     console.log(episodesSelect.value === 0);
-      // return  e.name == episodesSelect.value;
-      return episodesSelect.value !== "0" ? e.name == episodesSelect.value:true;
+    episodesSelect.addEventListener("change", function () {
+      filteredEpisodes = allEpisodes.filter(function (e) {
+        return episodesSelect.value !== "0"
+          ? e.name == episodesSelect.value
+          : true;
+      });
+
+      displayEpisodes(filteredEpisodes);
     });
 
-    displayEpisodes(filteredEpisodes);
-  });
- 
-  // using map to populate the page with the filtered episodes
-  const htmlString = filteredEpisodes.map((episodes) => {
-    // episodes format code
-episodeCode =`S${("0"+episodes.season).slice(-2)}E${("0"+episodes.number).slice(-2)}`;
-    
+    // using map to populate the page with the filtered episodes
+    const htmlString = filteredEpisodes.map((episodes) => {
+      // episodes format code
+      episodeCode = `S${("0" + episodes.season).slice(-2)}E${(
+        "0" + episodes.number
+      ).slice(-2)}`;
 
-    // displaying episodes
- //Div.ineerHTML += `<h2 class = "title">${episodes.name} ${episodeCode}</h2>`
-//if(episodes.image.medium){Div.ineerHTML +=`<img src="${episodes.image.medium}" class = "img" />`} 
-    return `
+      // displaying episodes
+      //Div.ineerHTML += `<h2 class = "title">${episodes.name} ${episodeCode}</h2>`
+      //if(episodes.image.medium){Div.ineerHTML +=`<img src="${episodes.image.medium}" class = "img" />`}
+      return `
             <div class = "episodeDiv">
                 <h2 class = "title">${episodes.name} ${episodeCode}</h2>
                 <img src="${episodes.image.medium}" class = "img" />
@@ -228,23 +224,21 @@ episodeCode =`S${("0"+episodes.season).slice(-2)}E${("0"+episodes.number).slice(
 
             </div>
         `;
-  });
-    
-  
-searchResults.style.display = "";
-  searchResults.innerHTML = `Displaying ${htmlString.length} of ${allEpisodes.length}`;
-  episodeFrames.innerHTML = htmlString;
-  
-}
+    });
+
+    //switching betwwen displaying the two searchbars
+    searchResults.style.display = "";
+    searchResults.innerHTML = `Displaying ${htmlString.length} of ${allEpisodes.length}`;
+    episodeFrames.innerHTML = htmlString;
+  }
 
 
 // Home button calls the display function with "allEpisodes" as a parameter to diplay all episodes again
 homeBtn.addEventListener("click", function () {
-  episodeFrames.innerHTML ="";
-   episodesSelect.innerHTML = "";
-   showsSelect.value = "All";
+   //episodeFrames.innerHTML ="";
+   episodesSelect.innerHTML = ""; 
+  showsSelect.value = "All";
   showShows(allShows);
- // displayEpisodes(allEpisodes);
 });
 
 
